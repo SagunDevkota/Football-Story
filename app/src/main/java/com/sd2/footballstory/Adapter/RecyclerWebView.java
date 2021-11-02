@@ -3,37 +3,34 @@ package com.sd2.footballstory.Adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.util.Log;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sd2.footballstory.MainActivity;
+import com.sd2.footballstory.Activity.WebViewFullScreen;
 import com.sd2.footballstory.R;
-import com.sd2.footballstory.Resource.VidConnect;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class RecyclerWebView extends RecyclerView.Adapter<RecyclerWebView.ViewHolder> {
     Context context;
-    LinkedHashMap<String,String> highlights = new LinkedHashMap<>();
-    private boolean fullScreen = false;
+    LinkedHashMap<String,String> highlights;
 
     public RecyclerWebView(Context context,LinkedHashMap<String,String> highlights) {
         this.context = context;
@@ -60,7 +57,23 @@ public class RecyclerWebView extends RecyclerView.Adapter<RecyclerWebView.ViewHo
         });
         WebSettings webSettings = holder.webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        holder.webView.loadData((new ArrayList<>(highlights.values())).get(holder.getAdapterPosition()), "text/html", "utf-8");
+        holder.webView.setWebViewClient(new WebViewClient());
+        String data = (new ArrayList<>(highlights.values())).get(holder.getAdapterPosition());
+        holder.webView.loadData(data, "text/html", "utf-8");
+        holder.webView.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        Intent intent = new Intent(v.getContext(), WebViewFullScreen.class);
+                        intent.putExtra("embed_link",data);
+                        v.getContext().startActivity(intent);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -72,10 +85,12 @@ public class RecyclerWebView extends RecyclerView.Adapter<RecyclerWebView.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder{
         WebView webView;
         TextView textView;
+        CardView cardView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             webView = itemView.findViewById(R.id.webView);
             textView = itemView.findViewById(R.id.textViewWeb);
+            cardView = itemView.findViewById(R.id.cardViewWeb);
         }
     }
 }

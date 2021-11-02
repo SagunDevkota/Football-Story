@@ -7,41 +7,44 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.FootballStory"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".HighlightsPage"
+            android:name=".Activity.WebViewFullScreen"
             android:exported="true"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".Activity.FragmentHolder"
+            android:exported="true">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
         </activity>
-        <activity
-            android:name=".LinkOption"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="true" />
-        <activity
-            android:name=".ListMatch"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="true" />
-        <activity
-            android:name=".SplashScreen"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity
+            android:name=".Activity.LinkOption"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true" />
+
+        <activity
+            android:name=".Activity.SplashScreen"
+            android:exported="true">
+
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+
+
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.LiveStreamPlayer"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true">
 

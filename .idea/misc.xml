@@ -3,13 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/activity_fragment_holder.xml" value="0.25" />
         <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/activity_highlights_page.xml" value="0.20416666666666666" />
         <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/activity_just_try_and_delete.xml" value="0.20416666666666666" />
         <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/activity_link_option.xml" value="0.19746376811594202" />
         <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/activity_list_match.xml" value="0.18" />
         <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/activity_splash_screen.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/activity_web_view_full_screen.xml" value="0.1716485507246377" />
         <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/exo_controller.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/fragment_highlights_page.xml" value="0.17617753623188406" />
+        <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/fragment_list_match.xml" value="0.17617753623188406" />
         <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/recycler_list_match.xml" value="0.33" />
         <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/recycler_view.xml" value="0.20416666666666666" />
         <entry key="..\:/Android_Projects/FootballStory/app/src/main/res/layout/recycler_web_view.xml" value="0.33" />

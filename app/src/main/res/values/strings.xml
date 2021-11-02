@@ -1,8 +1,17 @@
 <resources>
-    <string name="app_name">FootballStory</string>
+    <string name="app_name">Soccer Stream</string>
+    <string name="desc">Logo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Splash Screen -->
+    <!--Fragment List Match-->
+    <string name="message">Today\'s Matches</string>
     <string name="Note">
         Note: Live Streaming Links will be updated 30min ahead of Kick-Off even though matches are listed ahead.
     </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Load">
+        Load Matches
+    </string>
+
 </resources>

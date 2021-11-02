@@ -40,7 +40,7 @@ public class SplashScreen extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Intent intent = new Intent(SplashScreen.this, ListMatch.class);
+                Intent intent = new Intent(SplashScreen.this, FragmentHolder.class);
                 startActivity(intent);
                 finish();
             }

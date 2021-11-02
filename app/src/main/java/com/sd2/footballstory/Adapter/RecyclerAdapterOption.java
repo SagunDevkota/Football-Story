@@ -1,5 +1,6 @@
 package com.sd2.footballstory.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,9 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sd2.footballstory.MainActivity;
+import com.sd2.footballstory.Activity.LiveStreamPlayer;
 import com.sd2.footballstory.R;
-import com.sd2.footballstory.Resource.APIConnect;
 
 import java.util.ArrayList;
 
@@ -32,18 +32,16 @@ public class RecyclerAdapterOption extends RecyclerView.Adapter<RecyclerAdapterO
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapterOption.ViewHolder holder, int position) {
         holder.matchName.setText("Link "+(position+1));
-        holder.matchName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.matchName.setOnClickListener(v -> {
 //                APIConnect apiConnect = new APIConnect(context);
 //                String m3u8Link = apiConnect.m3u8Link(streamLinks.get(holder.getAdapterPosition()));
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
-                intent.putExtra("m3u8",streamLinks.get(holder.getAdapterPosition()));
-                context.startActivity(intent);
-            }
+            Intent intent = new Intent(v.getContext(), LiveStreamPlayer.class);
+            intent.putExtra("m3u8",streamLinks.get(holder.getAdapterPosition()));
+            context.startActivity(intent);
         });
     }
 

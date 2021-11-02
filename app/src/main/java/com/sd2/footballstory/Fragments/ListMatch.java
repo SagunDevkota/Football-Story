@@ -5,44 +5,62 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.sd2.footballstory.Adapter.RecyclerAdapter;
+import com.sd2.footballstory.Adapter.RecyclerAdapterListMatch;
 import com.sd2.footballstory.R;
 import com.sd2.footballstory.Resource.APIConnect;
 
 import java.util.ArrayList;
 
-public class ListMatch extends AppCompatActivity {
+public class ListMatch extends Fragment {
     RecyclerView recyclerView;
     ArrayList<String> arrayList;
     SwipeRefreshLayout swipeRefreshLayout;
     ProgressBar progressBar;
+    Button button;
+    public static ListMatch newInstance(){
+        return new ListMatch();
+    }
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_match);
-        recyclerView = findViewById(R.id.recyclerView);
-        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
-        progressBar = findViewById(R.id.progressBarList);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_list_match,container,false);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        progressBar = view.findViewById(R.id.progressBarList);
+        button = view.findViewById(R.id.btnListMatch);
+        progressBar.setVisibility(View.GONE);
+        button.setOnClickListener(v -> {
+            progressBar.setVisibility(View.VISIBLE);
+            getMatchInfo();
+            button.setVisibility(View.GONE);
+        });
 
-        getMatchInfo();
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            swipeRefreshLayout.setRefreshing(false);
+            swipeRefreshLayout.setRefreshing(true);
             try {
+                button.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
                 RearrangeItems();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
+        return view;
     }
 
     @Override
@@ -53,13 +71,17 @@ public class ListMatch extends AppCompatActivity {
     private void getMatchInfo() {
         Runnable objRunnable = () -> {
             Looper.prepare();
-            APIConnect apiConnect = new APIConnect(ListMatch.this);
+            APIConnect apiConnect = new APIConnect(getActivity());
             try {
                 arrayList = apiConnect.all_matches_name();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            objHandler.sendEmptyMessage(0);
+            if(arrayList.get(0).equals("JSON Decoding Error") || arrayList.get(0).equals("Connection Error")){
+                objHandler.sendEmptyMessage(1);
+            }else {
+                objHandler.sendEmptyMessage(0);
+            }
         };
         Thread objThread = new Thread(objRunnable);
         objThread.start();
@@ -68,12 +90,15 @@ public class ListMatch extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-            recyclerView.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(ListMatch.this, "Match Loading Completed", Toast.LENGTH_LONG).show();
-            RecyclerAdapter recyclerAdapter = new RecyclerAdapter(arrayList,ListMatch.this);
-            recyclerView.setAdapter(recyclerAdapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(ListMatch.this));
+            swipeRefreshLayout.setRefreshing(false);
+            if(msg.what == 0) {
+                recyclerView.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Match Loading Completed", Toast.LENGTH_LONG).show();
+                RecyclerAdapterListMatch recyclerAdapter = new RecyclerAdapterListMatch(arrayList, getActivity());
+                recyclerView.setAdapter(recyclerAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            }
         }
     };
 
